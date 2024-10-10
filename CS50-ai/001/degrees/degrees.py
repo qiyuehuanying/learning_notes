@@ -1,6 +1,6 @@
 import csv
 import sys
-
+import util
 from util import Node, StackFrontier, QueueFrontier
 
 # Maps names to a set of corresponding person_ids
@@ -83,7 +83,8 @@ def main():
             movie = movies[path[i + 1][0]]["title"]
             print(f"{i + 1}: {person1} and {person2} starred in {movie}")
 
-
+def get_path(node):
+    pass
 def shortest_path(source, target):
     """
     Returns the shortest list of (movie_id, person_id) pairs
@@ -91,7 +92,18 @@ def shortest_path(source, target):
 
     If no possible path, returns None.
     """
-
+    if source == target:
+        return None
+    ans=[]
+    start_state = Node(source)
+    visited = set()
+    people_container=StackFrontier()
+    people_container.add(start_state)
+    while not people_container.empty():
+        get_node = people_container.remove()
+        neighbors=[Node(x[1],x[0],get_node) for x in neighbors_for_person(get_node.state)]
+        for i in neighbors:
+            people_container.add(i)
     # TODO
     raise NotImplementedError
 
